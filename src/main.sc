@@ -3,21 +3,24 @@ require: slotfilling/slotFilling.sc
 theme: /
 
     state: Start
-        q!: $regex</start>
-        a: Начнём.
-
-    state: Hello
-        intent!: /привет
-        a: Привет привет
-
-    state: Bye
-        intent!: /пока
-        a: Пока пока
-
-    state: NoMatch
+        q!: *start
+        random:
+            a: Привет! Чем могу помочь?
+            a: Здравствуйте! Как я могу помочь вам сегодня?
+    
+    state: Date
+        q!: * (дат*/сегодня*) *
+        random:
+            a: Сегодня 29.12.2024.
+    
+    state: Week Day
+        q!: * (день*) *
+        random:
+            a: Сегодня воскресенье.
+    
+    state: CatchAll
         event!: noMatch
-        a: Я не понял. Вы сказали: {{$request.query}}
-
-    state: Match
-        event!: match
-        a: {{$context.intent.answer}}
+        random:
+            a: Извините, я не понял. Могу помочь с датой или днем недели.
+            a: Попробуйте переформулировать запрос. Я могу сообщить текущую дату или день недели.
+            
